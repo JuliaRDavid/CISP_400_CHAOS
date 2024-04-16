@@ -18,6 +18,17 @@ int main()
 
     vector<Vector2f> vertices;
     vector<Vector2f> points;
+    sf::Font font;
+    if (!font.loadFromFile("ARCADECLASSIC.TTF")) 
+    {
+        //error code if failure to load
+        std::cout << "ERROR: Text not loaded." << std::endl;
+    }
+    sf::Text text;
+    text.setFont(font);
+    text.setString("Click  on  3  locations  to  form  a  triangle");
+    text.setCharacterSize(32);
+    text.setFillColor(sf::Color::Cyan);
 
 	while (window.isOpen())
 	{
@@ -45,11 +56,13 @@ int main()
                     if(vertices.size() < 3)
                     {
                         vertices.push_back(Vector2f(event.mouseButton.x, event.mouseButton.y));
+                        text.setString("Click  on  another  location");
                     }
                     else if(points.size() == 0)
                     {
                         ///fourth click
                         ///push back to points vector
+                        text.setString("Watch  the  magic  happen!");
                         points.push_back(Vector2f(event.mouseButton.x, event.mouseButton.y));
                     }
                 }
@@ -84,6 +97,7 @@ int main()
 		****************************************
 		*/
         window.clear();
+        window.draw(text);
         for(int i = 0; i < vertices.size(); i++)
         {
             RectangleShape rect(Vector2f(10,10));
