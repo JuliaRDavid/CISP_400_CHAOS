@@ -14,7 +14,7 @@ int main()
     // Create a video mode object
 	VideoMode vm(1920, 1080);
 	// Create and open a window for the game
-	RenderWindow window(vm, "Timber Game!!", Style::Default);
+	RenderWindow window(vm, "Chaos Game!!", Style::Default);
 
     vector<Vector2f> vertices;
     vector<Vector2f> points;
@@ -50,6 +50,7 @@ int main()
                     {
                         ///fourth click
                         ///push back to points vector
+                        points.push_back(Vector2f(event.mouseButton.x, event.mouseButton.y));
                     }
                 }
             }
@@ -70,6 +71,11 @@ int main()
             ///select random vertex
             ///calculate midpoint between random vertex and the last point in the vector
             ///push back the newly generated coord.
+            int index = rand() % 3;
+            size_t lastPoint = points.size() - 1;
+            size_t midX = (points[lastPoint].x + vertices[index].x) / 2;
+            size_t midY = (points[lastPoint].y + vertices[index].y) / 2;
+            points.push_back(Vector2f(midX, midY));
         }
 
         /*
@@ -82,6 +88,14 @@ int main()
         {
             RectangleShape rect(Vector2f(10,10));
             rect.setPosition(Vector2f(vertices[i].x, vertices[i].y));
+            rect.setFillColor(Color::Blue);
+            window.draw(rect);
+        }
+
+        for (int i = 0; i < points.size(); i++)
+        {
+            RectangleShape rect(Vector2f(10, 10));
+            rect.setPosition(Vector2f(points[i].x, points[i].y));
             rect.setFillColor(Color::Blue);
             window.draw(rect);
         }
